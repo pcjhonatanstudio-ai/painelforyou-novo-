@@ -14,6 +14,12 @@ async function startServer() {
   app.use(cors());
   app.use(express.json());
 
+  // Logging middleware
+  app.use((req, res, next) => {
+    console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+    next();
+  });
+
   // --- API ROUTES ---
   
   // Auth Mock
@@ -65,6 +71,22 @@ async function startServer() {
   app.delete("/api/companies/:id", (req, res) => {
     companies = companies.filter(c => c.id !== req.params.id);
     res.status(204).send();
+  });
+
+  // Catch-all for unknown /api routes
+  app.all("/api/*", (req, res) => {
+    console.warn(`Unknown API route: ${req.method} ${req.url}`);
+    res.status(404).json({ 
+      error: "Route not found", 
+      method: req.method, 
+      url: req.url,
+      availableRoutes: [
+        "/api/auth/login",
+        "/api/dashboard/metrics",
+        "/api/whatsapp/connect/:id",
+        "/api/companies"
+      ]
+    });
   });
 
   // --- VITE MIDDLEWARE ---

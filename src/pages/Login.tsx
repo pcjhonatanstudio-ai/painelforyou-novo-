@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { LogIn, Mail, Lock, Loader2, Sparkles } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { API_URL } from "@/lib/api";
 import api from "@/lib/api";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -14,7 +15,6 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const [isCinematic, setIsCinematic] = useState(true);
   const { login } = useAuth();
-  const API_URL = import.meta.env.VITE_API_URL || "";
 
   // Cinematic Intro Delay
   React.useEffect(() => {
@@ -27,12 +27,13 @@ export default function Login() {
     setIsLoading(true);
     const toastId = toast.loading("Autenticando...");
     try {
-      const response = await api.post(`${API_URL}/api/auth/login`, { email, password });
+      const response = await api.post("/auth/login", { email, password });
       toast.success("Bem-vindo ao ForYouscale!", { id: toastId });
       login(response.data.token, response.data.user);
     } catch (error: any) {
       console.error("Login error:", error);
-      toast.error(error.response?.data?.error || "Erro na conexão. Tente novamente.", { id: toastId });
+      const fullUrl = error.config?.baseURL ? `${error.config.baseURL}${error.config.url}` : error.config?.url;
+      toast.error(`Erro ${error.response?.status || 'desconhecido'} em ${fullUrl}`, { id: toastId });
     } finally {
       setIsLoading(false);
     }

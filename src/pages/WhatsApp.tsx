@@ -20,12 +20,10 @@ export default function WhatsApp() {
   const [qrCode, setQrCode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isConnecting, setIsConnecting] = useState(false);
-  const API_URL = import.meta.env.VITE_API_URL || "";
-
   const fetchConnection = async () => {
     setIsLoading(true);
     try {
-      const response = await api.get(`${API_URL}/api/whatsapp/connect/empresa1`);
+      const response = await api.get("/whatsapp/connect/empresa1");
       setQrCode(response.data.qr);
       setStatus(response.data.status);
     } catch (error) {
