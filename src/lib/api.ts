@@ -1,12 +1,14 @@
 import axios from "axios";
 
-export const API_URL = import.meta.env.VITE_API_URL || "";
-
 const api = axios.create({
-  baseURL: API_URL || "/api",
+  baseURL: "",
 });
 
 api.interceptors.request.use((config) => {
+  // Debug logging for developers
+  const fullUrl = config.url;
+  console.log(`[API Request] ${config.method?.toUpperCase()} ${fullUrl}`);
+  
   const token = localStorage.getItem("foryouscale_token");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;

@@ -9,7 +9,7 @@ dotenv.config();
 
 async function startServer() {
   const app = express();
-  const PORT = process.env.PORT || 3000;
+  const PORT = Number(process.env.PORT) || 3000;
 
   app.use(cors());
   app.use(express.json());
@@ -25,14 +25,19 @@ async function startServer() {
   // Auth Mock
   app.post("/api/auth/login", (req, res) => {
     const { email, password } = req.body;
-    console.log(`Login attempt: ${email}`);
+    console.log(`[API] Login attempt: ${email}`);
     if (email && password) {
-      console.log(`Login successful for ${email}`);
+      console.log(`[API] Login successful for ${email}`);
       res.json({ token: "premium-jwt-token", user: { name: "Premium Admin", email } });
     } else {
-      console.log(`Login failed: Missing email or password`);
+      console.log(`[API] Login failed: Missing credentials`);
       res.status(401).json({ error: "Invalid credentials" });
     }
+  });
+
+  // Health check for testing
+  app.get("/api/health", (req, res) => {
+    res.json({ status: "alive", timestamp: new Date().toISOString() });
   });
 
   // Dashboard Metrics
@@ -105,8 +110,11 @@ async function startServer() {
   }
 
   app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`[Server] ForYouscale Premium Backend running on port ${PORT}`);
+    console.log(`[Server] Health check: http://localhost:${PORT}/api/health`);
   });
 }
 
-startServer();
+startServer().catch(err => {
+  console.error("[Server] Critical startup error:", err);
+});

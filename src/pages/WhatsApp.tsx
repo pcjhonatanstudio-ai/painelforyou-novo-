@@ -23,7 +23,7 @@ export default function WhatsApp() {
   const fetchConnection = async () => {
     setIsLoading(true);
     try {
-      const response = await api.get("/whatsapp/connect/empresa1");
+      const response = await api.get("/api/whatsapp/connect/empresa1");
       setQrCode(response.data.qr);
       setStatus(response.data.status);
     } catch (error) {
