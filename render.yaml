@@ -1,0 +1,12 @@
+services:
+  - type: static
+    name: foryouscale-frontend
+    buildCommand: npm install && npm run build
+    staticPublishDir: dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        value: https://sua-api-no-render.onrender.com/api
