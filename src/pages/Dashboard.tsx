@@ -36,9 +36,10 @@ const data = [
 
 export default function Dashboard() {
   const [metrics, setMetrics] = useState<any>(null);
+  const API_URL = import.meta.env.VITE_API_URL || "";
 
   useEffect(() => {
-    api.get("/api/dashboard/metrics").then((res) => setMetrics(res.data));
+    api.get(`${API_URL}/api/dashboard/metrics`).then((res) => setMetrics(res.data));
   }, []);
 
   const MetricCard = ({ title, value, icon: Icon, color, trend }: any) => (

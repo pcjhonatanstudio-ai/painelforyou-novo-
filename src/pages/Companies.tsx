@@ -47,11 +47,12 @@ export default function Companies() {
   const [search, setSearch] = useState("");
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [newCompany, setNewCompany] = useState({ name: "", phone: "", plan: "Gold", status: "Active" });
+  const API_URL = import.meta.env.VITE_API_URL || "";
 
   const fetchCompanies = async () => {
     setLoading(true);
     try {
-      const res = await api.get("/api/companies");
+      const res = await api.get(`${API_URL}/api/companies`);
       setCompanies(res.data);
     } catch (err) {
       toast.error("Erro ao carregar empresas.");
@@ -67,7 +68,7 @@ export default function Companies() {
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await api.post("/api/companies", newCompany);
+      await api.post(`${API_URL}/api/companies`, newCompany);
       toast.success("Empresa criada com sucesso!");
       setIsCreateOpen(false);
       setNewCompany({ name: "", phone: "", plan: "Gold", status: "Active" });
@@ -80,7 +81,7 @@ export default function Companies() {
   const handleDelete = async (id: string) => {
     if (confirm("Tem certeza que deseja deletar esta empresa premium?")) {
       try {
-        await api.delete(`/api/companies/${id}`);
+        await api.delete(`${API_URL}/api/companies/${id}`);
         toast.success("Empresa removida.");
         fetchCompanies();
       } catch (err) {

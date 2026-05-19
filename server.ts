@@ -19,9 +19,12 @@ async function startServer() {
   // Auth Mock
   app.post("/api/auth/login", (req, res) => {
     const { email, password } = req.body;
+    console.log(`Login attempt: ${email}`);
     if (email && password) {
+      console.log(`Login successful for ${email}`);
       res.json({ token: "premium-jwt-token", user: { name: "Premium Admin", email } });
     } else {
+      console.log(`Login failed: Missing email or password`);
       res.status(401).json({ error: "Invalid credentials" });
     }
   });

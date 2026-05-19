@@ -14,6 +14,7 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const [isCinematic, setIsCinematic] = useState(true);
   const { login } = useAuth();
+  const API_URL = import.meta.env.VITE_API_URL || "";
 
   // Cinematic Intro Delay
   React.useEffect(() => {
@@ -24,12 +25,14 @@ export default function Login() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    const toastId = toast.loading("Autenticando...");
     try {
-      const response = await api.post("/api/auth/login", { email, password });
-      toast.success("Bem-vindo ao ForYouscale!");
+      const response = await api.post(`${API_URL}/api/auth/login`, { email, password });
+      toast.success("Bem-vindo ao ForYouscale!", { id: toastId });
       login(response.data.token, response.data.user);
-    } catch (error) {
-      toast.error("Credenciais inválidas. Tente admin/admin.");
+    } catch (error: any) {
+      console.error("Login error:", error);
+      toast.error(error.response?.data?.error || "Erro na conexão. Tente novamente.", { id: toastId });
     } finally {
       setIsLoading(false);
     }
@@ -121,6 +124,7 @@ export default function Login() {
             </div>
 
             <Button
+              type="submit"
               disabled={isLoading}
               className="w-full h-12 bg-gold-gradient hover:shadow-[0_0_20px_rgba(212,175,55,0.4)] text-black font-bold rounded-xl transition-all duration-300 transform active:scale-95"
             >
