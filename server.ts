@@ -38,11 +38,11 @@ async function startServer() {
 
   // WhatsApp APIs
   app.get("/api/whatsapp/connect/:empresaId", (req, res) => {
-    res.json({ status: "disconnected", qrcode: "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=foryouscale-premium-connection" });
+    res.json({ status: "disconnected", qr: "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=foryouscale-premium-connection" });
   });
 
   app.get("/api/whatsapp/qrcode/:empresaId", (req, res) => {
-    res.json({ qrcode: "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=foryouscale-premium-connection-retry" });
+    res.json({ qr: "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=foryouscale-premium-connection-retry" });
   });
 
   // Companies CRUD (In-memory)

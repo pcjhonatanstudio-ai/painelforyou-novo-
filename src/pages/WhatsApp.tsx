@@ -25,7 +25,7 @@ export default function WhatsApp() {
     setIsLoading(true);
     try {
       const response = await api.get("/whatsapp/connect/1"); // Mocked company ID
-      setQrCode(response.data.qrcode);
+      setQrCode(response.data.qr);
       setStatus(response.data.status);
     } catch (error) {
       toast.error("Erro ao carregar conexão.");
