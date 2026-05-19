@@ -38,7 +38,7 @@ export default function Dashboard() {
   const [metrics, setMetrics] = useState<any>(null);
 
   useEffect(() => {
-    api.get("/dashboard/metrics").then((res) => setMetrics(res.data));
+    api.get("/api/dashboard/metrics").then((res) => setMetrics(res.data));
   }, []);
 
   const MetricCard = ({ title, value, icon: Icon, color, trend }: any) => (

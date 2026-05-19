@@ -25,7 +25,7 @@ export default function Login() {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await api.post("/auth/login", { email, password });
+      const response = await api.post("/api/auth/login", { email, password });
       toast.success("Bem-vindo ao ForYouscale!");
       login(response.data.token, response.data.user);
     } catch (error) {

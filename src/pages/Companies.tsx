@@ -51,7 +51,7 @@ export default function Companies() {
   const fetchCompanies = async () => {
     setLoading(true);
     try {
-      const res = await api.get("/companies");
+      const res = await api.get("/api/companies");
       setCompanies(res.data);
     } catch (err) {
       toast.error("Erro ao carregar empresas.");
@@ -67,7 +67,7 @@ export default function Companies() {
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await api.post("/companies", newCompany);
+      await api.post("/api/companies", newCompany);
       toast.success("Empresa criada com sucesso!");
       setIsCreateOpen(false);
       setNewCompany({ name: "", phone: "", plan: "Gold", status: "Active" });
@@ -80,7 +80,7 @@ export default function Companies() {
   const handleDelete = async (id: string) => {
     if (confirm("Tem certeza que deseja deletar esta empresa premium?")) {
       try {
-        await api.delete(`/companies/${id}`);
+        await api.delete(`/api/companies/${id}`);
         toast.success("Empresa removida.");
         fetchCompanies();
       } catch (err) {

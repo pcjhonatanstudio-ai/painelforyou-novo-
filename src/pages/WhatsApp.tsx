@@ -24,7 +24,7 @@ export default function WhatsApp() {
   const fetchConnection = async () => {
     setIsLoading(true);
     try {
-      const response = await api.get("/whatsapp/connect/1"); // Mocked company ID
+      const response = await api.get("/api/whatsapp/connect/1"); // Mocked company ID
       setQrCode(response.data.qr);
       setStatus(response.data.status);
     } catch (error) {
