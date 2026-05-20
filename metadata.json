@@ -1,5 +1,5 @@
 {
-  "name": "ForYouscale",
+  "name": "ForYouScale",
   "description": "Plataforma SaaS ultra premium para gestão de escala com IA e WhatsApp.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
